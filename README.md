@@ -4,7 +4,6 @@ Global Climate Lens — CO₂ Emissions & Temperature Anomalies (1750–2020)
 Anchor domain: Environment
 Optimization goal: Hiring (software + data + geospatial)
 Target roles: Geospatial Data amalg Engineer / Environmental Data Scientist / GIS Software Engineer
-Relocation-ready: Yes (global datasets, standard stack)
 
 1. Project Goal
 
