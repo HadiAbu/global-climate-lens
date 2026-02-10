@@ -46,6 +46,18 @@ docker run --rm \
         AND \"ISO3166-1-Alpha-3\" LIKE '___'
         AND \"ISO3166-1-Alpha-3\" <> '-99'"
 
+SIMPLIFY_TOLERANCE="${SIMPLIFY_TOLERANCE:-0.05}"
+echo "==> Building dim_country.geom_simplified (tolerance=${SIMPLIFY_TOLERANCE})..."
+docker exec -i climate_db psql -U "$POSTGRES_USER" -d "$POSTGRES_DB" -c "
+  ALTER TABLE dim_country
+    ADD COLUMN IF NOT EXISTS geom_simplified GEOMETRY(MULTIPOLYGON, 4326);
+  UPDATE dim_country
+     SET geom_simplified = ST_Multi(ST_SimplifyPreserveTopology(geom, ${SIMPLIFY_TOLERANCE}))
+   WHERE geom IS NOT NULL;
+  CREATE INDEX IF NOT EXISTS idx_dim_country_geom_simplified
+    ON dim_country
+    USING GIST (geom_simplified);
+"
 
 
 

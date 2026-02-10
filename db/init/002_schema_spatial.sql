@@ -5,7 +5,8 @@ CREATE TABLE IF NOT EXISTS dim_country (
   name TEXT NOT NULL,
   continent TEXT,
   income_group TEXT,
-  geom GEOMETRY(MULTIPOLYGON, 4326) NOT NULL
+  geom GEOMETRY(MULTIPOLYGON, 4326) NOT NULL,
+  geom_simplified GEOMETRY(MULTIPOLYGON, 4326)
 );
 
 CREATE TABLE IF NOT EXISTS fact_country_co2_yearly (
@@ -18,4 +19,5 @@ CREATE TABLE IF NOT EXISTS fact_country_co2_yearly (
 
 -- Indexes
 CREATE INDEX IF NOT EXISTS idx_dim_country_geom ON dim_country USING GIST (geom);
+CREATE INDEX IF NOT EXISTS idx_dim_country_geom_simplified ON dim_country USING GIST (geom_simplified);
 CREATE INDEX IF NOT EXISTS idx_fact_country_year ON fact_country_co2_yearly (year);

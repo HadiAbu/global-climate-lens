@@ -1,8 +1,11 @@
 from fastapi import FastAPI
 from sqlalchemy import text
 from db import get_engine
+from app.routers.spatial import router as spatial_router
 
 app = FastAPI(title="Global Climate Lens API")
+
+app.include_router(spatial_router)
 
 
 @app.get("/health")
