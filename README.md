@@ -29,6 +29,74 @@ It is a data product.
 How has cumulative global CO₂ evolved since 1750, how does it relate to temperature anomalies, and how do individual countries contribute to the global emissions trajectory over time?
 
 
+How to Run Guide
+Prereqs
+- Docker Desktop
+- Python 3.11+ (for ETL scripts)
+- Node 18+ (for UI)
+- Git Bash (recommended on Windows for the bash scripts)
+
+Step 1: Configure env
+- Ensure root `.env` exists (already in repo). Key values:
+  - `POSTGRES_USER`, `POSTGRES_PASSWORD`, `POSTGRES_DB`, `POSTGRES_PORT`
+  - `API_PORT` (default 8000)
+  - `DATABASE_URL`, `DATABASE_URL_LOCAL`
+- UI env is in `ui/.env`:
+  - `VITE_API_BASE_URL=http://localhost:8000`
+
+Step 2: Start DB + API
+```
+docker compose up -d
+```
+API should be available at `http://localhost:8000/docs`.
+PGAdmin is exposed on `http://localhost:5050`.
+
+Step 3: Build global datasets
+```
+python etl/01_global_etl.py
+```
+
+Step 4: Download spatial + country data
+```
+scripts/download_spatial_data.sh
+```
+
+Step 5: Load spatial geometry
+```
+scripts/load_countries.sh
+```
+
+Step 6: Build and load country CO2
+```
+python etl/02_ingest_country.py
+python etl/03_load_country_co2.py
+```
+
+Step 7: Load global facts into DB
+```
+scripts/load_global.sh
+```
+
+Step 8: Validate data integrity
+```
+python scripts/validate_country_co2.py
+```
+
+Step 9: Run the UI
+```
+cd ui
+npm install
+npm run dev
+```
+UI should be available at `http://localhost:5173`.
+
+Notes
+- The bash scripts use `cygpath` and work best in Git Bash on Windows.
+- If the UI hits CORS issues, the API already allows `http://localhost:5173` in `api/main.py`.
+
+
+
+
 3. Data Sources (Frozen)
 3.1 Primary (Kaggle — Global, Non-Spatial)
 
@@ -262,3 +330,5 @@ No ML forecasting
 No microservices
 
 No mobile-first work
+
+
