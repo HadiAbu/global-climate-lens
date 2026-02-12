@@ -1,3 +1,7 @@
+<img width="1863" height="854" alt="image" src="https://github.com/user-attachments/assets/560d441b-900d-49c4-8d80-7746c14c6482" />
+<img width="823" height="805" alt="image" src="https://github.com/user-attachments/assets/9317efcf-4f9b-42e5-a0aa-96887e16fc9e" />
+
+
 🌍 Project Specification
 Global Climate Lens — CO₂ Emissions & Temperature Anomalies (1750–2020)
 
