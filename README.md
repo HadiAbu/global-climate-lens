@@ -24,6 +24,7 @@ Demonstrates real production thinking: ETL → DB → API → Web UI
 This is not a map demo.
 It is a data product.
 
+
 2. Core Question the Project Answers
 
 How has cumulative global CO₂ evolved since 1750, how does it relate to temperature anomalies, and how do individual countries contribute to the global emissions trajectory over time?
